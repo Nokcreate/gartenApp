@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <View style={{ flex: 1}}>
-    <NavigationContainer>
+<NavigationContainer>
       
       <Tab.Navigator 
             initialRouteName='Home'
