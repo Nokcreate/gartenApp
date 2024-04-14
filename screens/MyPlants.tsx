@@ -21,6 +21,8 @@ const MyPlants = () => {
 
   return (
     <>
+    <View style={styles.container}>
+    <Text style={styles.headline}>My Plants</Text>
       <FlatList
         data={plants}
         keyExtractor={(item, index) => index.toString()}
@@ -40,24 +42,36 @@ const MyPlants = () => {
           onClose={() => setModalVisible(false)}
         />
       )}
+    </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    backgroundColor: 'lightgreen',
+    padding: 10,
+    justifyContent: 'center',
+  },
   headline: {
     fontSize: 20,
     fontWeight: 'bold',
     margin: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
+    textAlign: 'center',
+    color: '#fff'
 
   },
   listItemContainer: {
+    flex: 1,
     flexDirection: 'row',
     padding: 10,
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderBottomEndRadius: 10,
+    borderTopStartRadius: 10,
   },
   plantName: {
     fontWeight: 'bold',

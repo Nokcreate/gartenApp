@@ -1,27 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { useState } from 'react';
+import { TREFLE_API_KEY } from '@env';
 import React from 'react';
+import { View, Text } from 'react-native';
 
+const SearchScreen = () => {
+  // Beispiel für eine Funktion, die Daten von Trefle.io abruft
+  const fetchPlants = async () => {
+    try {
+      const response = await fetch(`https://trefle.io/api/v1/plants?token=${TREFLE_API_KEY}`);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Fehler beim Abrufen der Pflanzendaten:', error);
+    }
+  };
 
-
-export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>This is my search</Text>
-      <StatusBar style="auto" />
-      
+    <View>
+      <Text onPress={fetchPlants}>Lade Pflanzendaten</Text>
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default SearchScreen;
