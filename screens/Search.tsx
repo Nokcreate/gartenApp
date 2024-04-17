@@ -1,21 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, FlatList, StyleSheet, TouchableOpacity, Image, Modal } from 'react-native';
+import React, { useState, useEffect, ReactElement } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, Modal, ListRenderItemInfo, Button, Keyboard } from 'react-native';
 import { TREFLE_API_KEY } from '@env';
+import InputField from '../components/InputField';
+import CustomButton from '../components/customButton';
 
-const SearchScreen = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
+interface Plant {
+  id: number;
+  common_name: string;
+  scientific_name: string;
+  image_url: string;
+}
 
-  const fetchPlants = async () => {
+const SearchScreen = (): ReactElement => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [results, setResults] = useState<Plant[]>([]);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+
+  const fetchPlants = async (): Promise<void> => {
     if (searchTerm.trim() === '') {
       setResults([]);
+      Keyboard.dismiss();
       return;
     }
     try {
       const response = await fetch(`https://trefle.io/api/v1/plants/search?token=${TREFLE_API_KEY}&q=${searchTerm}`);
       const data = await response.json();
-      setResults(data.data);
+      setResults(data.data || []);
     } catch (error) {
       console.error('Fehler beim Abrufen der Pflanzendaten:', error);
       setResults([]);
@@ -25,31 +36,38 @@ const SearchScreen = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchPlants();
-    }, 500); // Debounce the API call by 500ms
+    }, 500); 
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  const openImage = (imageUrl) => {
+  const openImage = (imageUrl: string): void => {
     setSelectedImage(imageUrl);
   };
 
-  const closeImage = () => {
+  const closeImage = (): void => {
     setSelectedImage(null);
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.headline}>Suche nach Pflanzen</Text>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Suche Pflanzen..."
-        value={searchTerm}
-        onChangeText={setSearchTerm}
-      />
+      <View style={styles.searchContainer}>
+        <InputField
+          style={styles.searchInput}
+          placeholder="Suche Pflanzen..."
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
+        <CustomButton
+          title="Suchen"
+          onPress={fetchPlants} // Trigger search when the button is pressed
+
+        />
+      </View>
       <FlatList
         data={results}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item }: ListRenderItemInfo<Plant>) => (
           <View style={styles.item}>
             <Text style={styles.plantName}>{item.common_name}</Text>
             <Text style={styles.scientificName}>{item.scientific_name}</Text>
@@ -61,7 +79,7 @@ const SearchScreen = () => {
       />
       <Modal visible={!!selectedImage} transparent={true} animationType="fade">
         <TouchableOpacity style={styles.modal} onPress={closeImage}>
-          <Image source={{ uri: selectedImage }} style={styles.fullImage} />
+          <Image source={{ uri: selectedImage! }} style={styles.fullImage} />
         </TouchableOpacity>
       </Modal>
     </View>
@@ -72,7 +90,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#90EE90',
   },
   headline: {
     fontSize: 24,
@@ -81,13 +99,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
+  searchContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
   searchInput: {
+    flex: 1,
     height: 40,
     borderColor: 'gray',
-    borderWidth: 1,
     padding: 10,
-    marginBottom: 10,
-    marginRight: 100,
+    marginRight: 10,
     backgroundColor: '#fff',
   },
   item: {

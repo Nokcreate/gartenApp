@@ -4,12 +4,20 @@ import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react
 import { usePlants } from '../contexts/PlantContext';
 import PlantDetailsModal from '../components/Modal'; // Stelle sicher, dass der Pfad korrekt ist
 
+interface Plant {
+  id: number;
+  name: string;
+  description: string;
+  imageUri: string;
+}
+
+
 const MyPlants = () => {
   const { plants } = usePlants();
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  const openPlantDetails = (plant) => {
+  const openPlantDetails = (plant : Plant) => {
     console.log("Open plant details for:", plant.name);
     setSelectedPlant(plant);
     setModalVisible(true);
@@ -27,7 +35,7 @@ const MyPlants = () => {
         data={plants}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => openPlantDetails(item)} style={styles.listItemContainer}>
+          <TouchableOpacity onPress={() => openPlantDetails(item as Plant)} style={styles.listItemContainer}>
             <Text style={styles.plantName}>{item.name}</Text>
             <Text style={styles.plantDescription}>{item.description}</Text>
             <Image source={{ uri: item.imageUri }} style={styles.image} />
@@ -51,7 +59,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#90EE90',
     padding: 10,
     justifyContent: 'center',
   },

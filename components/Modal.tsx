@@ -14,7 +14,7 @@ interface PlantDetailsModalProps {
 }
 
 const PlantDetailsModal: React.FC<PlantDetailsModalProps> = ({ plant, visible, onClose }) => {
-  if (!plant) return null; // Falls kein Plant vorhanden ist, nichts rendern
+  if (!plant || !plant.name || !plant.imageUri || !plant.description) return null;
 
   return (
     <Modal
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',  
   },
   modalView: {
     margin: 20,

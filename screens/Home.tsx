@@ -1,8 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { useState } from 'react';
 import React from 'react';
 
 
@@ -26,7 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#90EE90',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -35,8 +32,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     marginBottom: -20,
-    width: '100%', // Macht den Container so breit wie möglich
-    alignItems: 'center', // Zentriert den Inhalt horizontal
+    width: '100%', 
+    alignItems: 'center', 
   },
   headerText: {
     fontWeight: 'bold',
@@ -46,15 +43,15 @@ const styles = StyleSheet.create({
   image: {
     flex: 4,
     width: '100%',
-    height: '80%', // Höhe des Bildes anpassen
-    marginBottom:  30, // Abstand zum Text
+    height: '80%',
+    marginBottom:  30,
     
   },
   smallText: {
     flex: 1,
     fontSize: 16,
     color: '#fff',
-    textAlign: 'left', // Setzt die Textausrichtung auf links
-    padding: 10, // Fügt Innenabstand hinzu
+    textAlign: 'left',
+    padding: 10, 
   },
 });
