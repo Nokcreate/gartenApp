@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { usePlants } from '../contexts/PlantContext';
-import PlantDetailsModal from '../components/Modal'; // Stelle sicher, dass der Pfad korrekt ist
+import PlantDetailsModal from '../components/Modal'; 
 
 interface Plant {
   id: number;
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
     width: '100%',
-    backgroundColor: '#CED0CE', // Wähle eine Farbe, die gut zu deinem Design passt
+    backgroundColor: '#CED0CE', 
   },
 });
 

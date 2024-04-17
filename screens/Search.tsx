@@ -60,7 +60,7 @@ const SearchScreen = (): ReactElement => {
         />
         <CustomButton
           title="Suchen"
-          onPress={fetchPlants} // Trigger search when the button is pressed
+          onPress={fetchPlants} 
 
         />
       </View>
